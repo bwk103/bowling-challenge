@@ -7,7 +7,8 @@ describe('Roll', function(){
 
   describe('#score', function(){
     it('returns the score of the roll', function(){
-      expect(roll.score()).toEqual(0);
+      roll.addScore(4);
+      expect(roll.score()).toEqual(4);
     })
   })
 

@@ -6,8 +6,9 @@ describe('Player', function(){
     player = new Player('James')
   });
 
-  it('has a name', function(){
-    expect(player.name).toEqual('James')
+  describe('#name', function(){
+    it('returns the player name', function(){
+      expect(player.name()).toEqual('James')
+    })
   })
-
 })

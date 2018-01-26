@@ -3,19 +3,44 @@ describe('Frame', function(){
   var roll;
 
   beforeEach(function(){
-    frame = new Frame()
-    roll = jasmine.createSpy(roll, '_score').and.returnValue(3)
+    frame = new Frame();
+    roll = {
+      score: function(){
+        return 3
+      }
+    };
+    roll2 = {
+      score: function(){
+        return 5
+      }
+    };
   });
 
   describe('defaults', function(){
-    it('contains two rolls', function(){
-      expect(frame._rolls.length).toEqual(2);
+    it('is incomplete', function(){
+      expect(frame.isComplete()).toEqual(false);
     })
   })
 
+  // describe('#complete', function(){
+  //   it('ends the frame', function(){
+  //     frame.complete();
+  //     expect(frame.isComplete()).toEqual(true);
+  //   })
+  // })
+
   describe('#frameScore', function(){
-    it('returns the value of the two rolls', function(){
-      expect(frame.frameScore()).toEqual(6)
+    it('checks the value of the two rolls', function(){
+      spyOn(roll, 'score')
+      frame.addRoll(roll)
+      frame.addRoll(roll)
+      frame.frameScore();
+      expect(roll.score).toHaveBeenCalled();
+    })
+    it('returns the cumulative value of the rolls', function(){
+      frame.addRoll(roll);
+      frame.addRoll(roll2);
+      expect(frame.frameScore()).toEqual(8)
     })
   })
 })

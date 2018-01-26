@@ -1,5 +1,5 @@
 var Roll = function(){
-  this._score = 0;
+  this._score = null;
 }
 
 Roll.prototype.score = function(){
@@ -7,7 +7,6 @@ Roll.prototype.score = function(){
 }
 
 Roll.prototype.addScore = function(value){
-  console.log(check_value(value))
   if(!check_value(value)){
       throw new Error('Only integers between 0 and 10 please')
   }
