@@ -55,34 +55,56 @@ describe('Game', function(){
   })
 
   describe('#roll', function(){
-    it('rolls a ball', function(){
-      roll = jasmine.createSpyObj('roll', ['addScore'])
+
+    describe('during the game', function(){
+      it('rolls a ball', function(){
+        roll = jasmine.createSpyObj('roll', ['addScore'])
+        game.start();
+        game.roll(5, roll);
+        expect(roll.addScore).toHaveBeenCalled();
+      })
+
+      it('checks whether the frame is over', function(){
+        roll = jasmine.createSpyObj('roll', ['addScore'])
+        spyOn(frame, 'isComplete')
+        game.start(frame);
+        game.roll(3, roll);
+        expect(frame.isComplete).toHaveBeenCalled();
+      })
+
+      it('moves to the next frame if the current frame is over', function(){
+        roll = jasmine.createSpyObj('roll', ['addScore', 'isComplete'])
+        game.start();
+        game.roll(3);
+        game.roll(5);
+        expect(game.currentFrame()).toEqual(2);
+      })
+
+      it('gets the frame score when complete', function(){
+        game.start()
+        game.roll(3);
+        game.roll(5);
+        expect(game.score()).toEqual(8);
+      })
+
+      it('adds the frame score to the total', function(){
+        game.start()
+        for(let i =0;i<20;i++){
+          game.roll(1)
+        }
+        expect(game.score()).toEqual(20);
+      })
+    })
+  })
+
+  describe('#gameOver', function(){
+
+    it('confirms the game is over and tells the player their score', function(){
       game.start();
-      game.roll(5, roll);
-      expect(roll.addScore).toHaveBeenCalled();
-    })
-
-    it('checks whether the frame is over', function(){
-      roll = jasmine.createSpyObj('roll', ['addScore'])
-      spyOn(frame, 'isComplete')
-      game.start(frame);
-      game.roll(3, roll);
-      expect(frame.isComplete).toHaveBeenCalled();
-    })
-
-    it('moves to the next frame if the current frame is over', function(){
-      roll = jasmine.createSpyObj('roll', ['addScore', 'isComplete'])
-      game.start();
-      game.roll(3);
-      game.roll(5);
-      expect(game.currentFrame()).toEqual(2);
-    })
-
-    it('gets the frame score when complete', function(){
-      game.start()
-      game.roll(3);
-      game.roll(5);
-      expect(game.score()).toEqual(8);
+      for(let i=0; i<10; i++){
+        game.roll(1)
+      }
+      expect(game.gameOver()).toEqual('Game Over. You scored 10')
     })
   })
 })
