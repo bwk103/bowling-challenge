@@ -85,6 +85,7 @@ h3 {
   border: 2px solid black;
   border-right: none;
   border-top: none;
+  text-align: center;
 }
 
 .bonus {
@@ -98,7 +99,13 @@ h3 {
   align-self: center;
 }
 
-#button-list button {
+#button-list input {
   height: 30px;
   width: 50px;
+}
+
+.frame-score {
+  grid-area: 2 / 2 / 3 / 4;
+  justify-self: center;
+  align-self: center;
 }

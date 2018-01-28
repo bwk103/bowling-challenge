@@ -14,6 +14,7 @@
       <div id="background"></div>
       <img src="title-image.png">
       <h3>Let's Bowl</h3>
+      <button id="start-button">Start Game</button>
       <div class="scoreboard">
         <div class="score_titles">
           <p>Player</p>
@@ -33,64 +34,76 @@
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div class="frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
+          <div class="frame-score"></div>
         </div>
         <div id="total" class="frame">
           <div class="roll bonus"></div>
+          <div class="frame-score"></div>
         </div>
       </div>
       <div id="button-list">
-        <button>0</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>10</button>
+        <input class="roll-btn" type="button" value="0">
+        <input class="roll-btn" type="button" value="1">
+        <input class="roll-btn" type="button" value="2">
+        <input class="roll-btn" type="button" value="3">
+        <input class="roll-btn" type="button" value="4">
+        <input class="roll-btn" type="button" value="5">
+        <input class="roll-btn" type="button" value="6">
+        <input class="roll-btn" type="button" value="7">
+        <input class="roll-btn" type="button" value="8">
+        <input class="roll-btn" type="button" value="9">
+        <input class="roll-btn" type="button" value="10">
       </div>
     </div>
-    <script src="src/Game.js"></script>
+    <script src="bundle.js"></script>
+    <script src="src/Roll.js"></script>
     <script src="src/Frame.js"></script>
     <script src="src/Player.js"></script>
-    <script src="src/Roll.js"></script>
+    <script src="src/Game.js"></script>
   </body>
 </html>
