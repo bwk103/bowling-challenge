@@ -8,7 +8,6 @@ $(document).ready(function(){
 
   $('#start-button').on('click', function(){
     game.start();
-    console.log(game);
   })
 
   $('.roll-btn').on('click', function(){
@@ -23,13 +22,27 @@ $(document).ready(function(){
   }
 
   updateRollScores = function(score){
-    rollScores.first().text(score);
+    if (score === 10){
+      tenScored()
+    } else {
+      rollScores.first().text(score);
+    }
     rollScores.splice(0, 1);
   }
 
   updateFrameScores = function(){
     frameScores.first().text(game.score());
     frameScores.splice(0, 1);
+  }
+
+  tenScored = function(){
+    if ($(rollScores).first().attr('class').includes('first-roll')){
+      rollScores.eq(0).text('X');
+      rollScores.eq(1).text('-');
+      rollScores.splice(0, 1)
+    } else {
+      rollScores.first().text('/');
+    }
   }
 
   checkFrame = function(){
