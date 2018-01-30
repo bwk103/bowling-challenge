@@ -13,6 +13,12 @@ describe('Game', function(){
       addRoll: function(frame){
         return true;
       },
+      isBonusDue: function(){
+        return true
+      },
+      bonusScore: function(){
+        return true
+      },
       isFirstRoll: function(frame){
         return true;
       },
@@ -50,7 +56,34 @@ describe('Game', function(){
         return true;
       },
       _rolls: [roll]
-    };
+    },
+    nonBonusFrame = {
+      isComplete: function(){
+        return true;
+      },
+      addRoll: function(frame){
+        return true;
+      },
+      isBonusDue: function(){
+        return false
+      },
+      bonusScore: function(){
+        return false
+      },
+      isFirstRoll: function(frame){
+        return false;
+      },
+      frameScore: function(){
+        return 4;
+      },
+      hasStrike: function(){
+        return false;
+      },
+      endFrame: function(){
+        return false;
+      },
+      _rolls: [roll]
+    },
     roll = {
       addScore: function(){
         return true;
@@ -107,10 +140,10 @@ describe('Game', function(){
 
   describe('#addScore', function(){
     it('checks the frameScore', function(){
-      spyOn(frameWithSingleRoll, 'frameScore')
-      game.start(frameWithSingleRoll)
-      game.roll(3)
-      expect(frameWithSingleRoll.frameScore).toHaveBeenCalled();
+      spyOn(frame, 'frameScore')
+      game.start(frame)
+      game.addScore(frame);
+      expect(frame.frameScore).toHaveBeenCalled();
     })
 
     describe('when TWO ROLLS in a frame', function(){
@@ -119,14 +152,6 @@ describe('Game', function(){
         game.roll(5)
         game.roll(3)
         expect(game.score()).toEqual(8)
-      })
-    })
-
-    describe('when STRIKE scored', function(){
-      it('adds 10 to the game score', function(){
-        game.start()
-        game.roll(10)
-        expect(game.score()).toEqual(10)
       })
     })
   })
@@ -149,7 +174,7 @@ describe('Game', function(){
 
   describe('#roll', function(){
 
-    describe('when FIRST ROLL of the frame and NOT A STRIKE', function(){
+    describe('when FIRST ROLL of the frame and NOT A STRIKE OR SPARE', function(){
 
       it('rolls a ball', function(){
         spyOn(roll, 'addScore')
@@ -203,10 +228,19 @@ describe('Game', function(){
         expect(frame.endFrame).toHaveBeenCalled();
       })
 
-      it('adds the frame score to the game score', function(){
+      it('does not add the frame score to the game score before applying bonus', function(){
         spyOn(game, 'addScore')
         game.start(frame)
         game.roll(10)
+        expect(game.addScore).not.toHaveBeenCalled()
+      })
+
+      it('adds the frame score to the game score once the frame is complete', function(){
+        spyOn(game, 'addScore')
+        game.start(frame)
+        game.roll(10)
+        game.roll(2)
+        game.roll(2)
         expect(game.addScore).toHaveBeenCalled()
       })
 
@@ -228,14 +262,77 @@ describe('Game', function(){
         })
       })
 
-      describe('when in FINAL FRAME', function(){
+      describe('when in FINAL FRAME and NOT a STRIKE or SPARE', function(){
         it('ends the game', function(){
-          spyOn(game, 'gameOver')
-          game.start(frame)
-          for(let i =0; i< 10; i++){
-            game.roll(10)
+          game.start()
+          for(let i =0; i< 20; i++){
+            game.roll(3)
           }
-          expect(game.gameOver).toHaveBeenCalled()
+          expect(game.gameComplete).toBe(true)
+        })
+      })
+
+      describe('when in FINAL FRAME and a SPARE is scored', function(){
+        it('does not end the game', function(){
+          game.start()
+          for(let i =0; i< 18; i++){
+            game.roll(3)
+          }
+          game.roll(5)
+          game.roll(5)
+          expect(game.gameComplete).toBe(false)
+        })
+
+        it('does not create a new frame', function(){
+          game.start()
+          for(let i =0; i< 18; i++){
+            game.roll(3)
+          }
+          game.roll(5)
+          game.roll(5)
+          expect(game._frames.length).toBe(10)
+        })
+
+        it('adds the following roll to the score', function(){
+          game.start()
+          for(let i =0; i< 18; i++){
+            game.roll(0)
+          }
+          game.roll(5)
+          game.roll(5)
+          game.roll(3)
+          expect(game.score()).toBe(13)
+        })
+      })
+
+      describe('when in FINAL FRAME and a STRIKE is scored', function(){
+        it('does not end the game', function(){
+          game.start()
+          for(let i = 0; i<18; i++){
+            game.roll(0)
+          }
+          game.roll(10)
+          expect(game.gameComplete).toBe(false)
+        })
+
+        it('does not create a new game', function(){
+          game.start()
+          for(let i = 0; i<18; i++){
+            game.roll(0)
+          }
+          game.roll(10)
+          expect(game._frames.length).toBe(10)
+        })
+
+        it('adds the following two rolls to the score', function(){
+          game.start()
+          for(let i = 0; i<18; i++){
+            game.roll(0)
+          }
+          game.roll(10)
+          game.roll(2)
+          game.roll(3)
+          expect(game.score()).toBe(15)
         })
       })
 
@@ -266,7 +363,8 @@ describe('Game', function(){
 
         it('adds the frame score to the game score', function(){
           spyOn(game, 'addScore')
-          game.start(frameWithSingleRoll)
+          game.start(nonBonusFrame)
+          game.roll(2)
           game.roll(2)
           expect(game.addScore).toHaveBeenCalled();
         })
@@ -286,6 +384,16 @@ describe('Game', function(){
           }
           expect(game._isGameOver()).toBe(true)
         });
+      })
+    })
+
+    describe('when game is over', function(){
+      it('players cannot roll again', function(){
+        game.start()
+        for(let i = 0; i< 20; i++){
+          game.roll(3)
+        }
+        expect(function() { game.roll(3) }).toThrowError('The game is over')
       })
     })
   })

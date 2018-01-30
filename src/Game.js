@@ -12,7 +12,10 @@ Game.prototype.score = function(){
 }
 
 Game.prototype.roll = function(value, roll=new Roll){
+  if(this._isGameOver()) throw new Error('The game is over')
+  if(this.lastFrameBonus()) return this._addBonusScores(value)
   var thisFrame = this._frames[this._currentFrameIndex()]
+  if(!this._isFirstFrame()) this._addBonusScores(value);
   if (thisFrame.isFirstRoll()) this._firstRoll(thisFrame, value, roll);
   else this._secondRoll(thisFrame, value, roll);
 }
@@ -50,8 +53,11 @@ Game.prototype._firstRoll = function(frame, value, roll){
 
 Game.prototype._strikeScored = function(frame){
   frame.endFrame();
-  this.addScore(frame);
-  if(this._isGameOver()) return this.gameOver();
+  //if this.isLastFrame() => lastFrameStrike()
+  if(this._isGameOver()) return this.gameOver(); //This line will be moved to the frame10Bonus function
+  else if(this.isLastFrame()){
+    //something else
+  }
   else this.nextFrame();
 }
 
@@ -60,16 +66,45 @@ Game.prototype._secondRoll = function(frame, value, roll){
   roll.addScore(value)
   this._addToFrame(frame, roll)
   frame.endFrame();
-  this.addScore(frame);
+  if(frame.isComplete()) this.addScore(frame);
   if(this._isGameOver()) return this.gameOver();
-  else this.nextFrame();
+  else if (this.isLastFrame() && frame.isBonusDue()){
+    //something which is not creating a new frame
+  } else this.nextFrame();
 }
 
 Game.prototype._isGameOver = function(){
-  return this._frames.length >= 10;
+  var frame = this._frames[9] || { isComplete: ()=> false }
+  return frame.isComplete() === true
 }
 
 Game.prototype._isValidScore = function(frame, value){
   if(frame._rolls[0].score() + parseInt(value) > 10) return false;
   return true
+}
+
+Game.prototype._isFirstFrame = function(){
+  return this._frames.length === 1;
+}
+
+Game.prototype._addBonusScores = function(value){
+  var game = this;
+  var bonusFrames = this._frames.filter(function(frame){
+    return frame.isBonusDue() && frame.isComplete() === false
+  });
+  if (bonusFrames.length > 0){
+    bonusFrames.forEach(function(frame){
+      frame.bonusScore(value);
+      if(frame.isComplete()) game.addScore(frame)
+    })
+  }
+  this.gameComplete = this._isGameOver();
+}
+
+Game.prototype.lastFrameBonus = function(){
+  return this._frames.length === 10 && this._frames[9].isBonusDue()
+}
+
+Game.prototype.isLastFrame = function(){
+  return this._frames.length === 10;
 }

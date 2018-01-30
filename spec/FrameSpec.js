@@ -29,7 +29,8 @@ describe('Frame', function(){
 
   describe('#isComplete', function(){
     it('returns true when the frame is over', function(){
-      frame.addRoll(strikeRoll)
+      frame.addRoll(roll)
+      frame.addRoll(roll)
       frame.endFrame()
       expect(frame.isComplete()).toEqual(true)
     })
@@ -108,6 +109,21 @@ describe('Frame', function(){
       frame.endFrame();
       expect(frame.frameScore()).toEqual(6)
     })
+
+    it('checks to see whether a bonus is due', function(){
+      spyOn(frame, 'isBonusDue')
+      frame.addRoll(strikeRoll)
+      frame.endFrame()
+      expect(frame.isBonusDue).toHaveBeenCalled()
+    })
+
+    describe('if bonus is due', function(){
+      it('does not end the frame', function(){
+        frame.addRoll(strikeRoll)
+        frame.endFrame();
+        expect(frame.isComplete()).toEqual(false)
+      })
+    })
   })
 
   describe('#isFirstRoll', function(){
@@ -118,6 +134,62 @@ describe('Frame', function(){
     it('returns false if second roll in frame', function(){
       frame.addRoll(roll);
       expect(frame.isFirstRoll()).toBe(false)
+    })
+  })
+
+  describe('#bonusDue', function(){
+    it('returns true if the player scores a strike', function(){
+      frame.addRoll(strikeRoll)
+      frame.endFrame();
+      expect(frame.isBonusDue()).toEqual(true)
+    });
+
+    it('returns true if the player scores a spare', function(){
+      frame.addRoll(roll2);
+      frame.addRoll(roll2);
+      frame.endFrame()
+      expect(frame.isBonusDue()).toEqual(true)
+    })
+
+    it('returns false if the player has not scored ten', function(){
+      frame.addRoll(roll)
+      frame.addRoll(roll)
+      frame.endFrame()
+      expect(frame.isBonusDue()).toEqual(false)
+    })
+  })
+
+  describe('#spareBonus', function(){
+    it('returns the correct bonus for a spare', function(){
+      frame.addRoll(roll2)
+      frame.addRoll(roll2)
+      frame.endFrame()
+      frame.spareBonus(4)
+      expect(frame.frameScore()).toEqual(14)
+    })
+
+    it('ends the frame', function(){
+      frame.addRoll(roll2)
+      frame.addRoll(roll2)
+      frame.endFrame()
+      frame.spareBonus(5)
+      expect(frame.isComplete()).toBe(true)
+    })
+  })
+
+  describe('#strikeBonus', function(){
+    it('returns the correct bonus for a strike', function(){
+      frame.addRoll(strikeRoll)
+      frame.endFrame()
+      frame.strikeBonus(2, 4)
+      expect(frame.frameScore()).toBe(16)
+    });
+
+    it('ends the frame', function(){
+      frame.addRoll(strikeRoll)
+      frame.endFrame()
+      frame.strikeBonus(6, 2)
+      expect(frame.isComplete()).toBe(true)
     })
   })
 })
