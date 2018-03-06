@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
   var game = new Game()
   var rollScores = $('.roll')
   var rollIndex = 0;
@@ -25,9 +25,16 @@ $(document).ready(function(){
   updateRollScores = function(score){
     var score = score;
     if (score === 10){
-      tenScored()
+      if (game.currentFrame() === 10 && game._frames[9]._rolls.length > 0 ) {
+        lastFrameScores()
+      } else {
+        tenScored()
+      }
     } else {
     if (isSecondRoll() && isSpare(score)){
+      score = '/'
+    }
+    if (isThirdRoll() && lastFrameSpare(score)){
       score = '/'
     }
     rollScores.eq(rollIndex).text(score)
@@ -45,14 +52,40 @@ $(document).ready(function(){
     }
   }
 
+  ///
+  lastFrameScores = function(){
+    if (isSecondRoll() && isSpare(10) ){
+      rollScores.eq(rollIndex).text('/')
+      rollIndex += 1;
+    } else if (isThirdRoll()){
+      if (lastFrameSpare(10)){
+        rollScores.eq(rollIndex).text('/')
+        rollIndex += 1;
+      }
+      rollScores.eq(rollIndex).text('X')
+    } else {
+      rollScores.eq(rollIndex).text('X')
+      rollIndex += 1;
+    }
+  }
+
+  lastFrameSpare = function(score){
+    return parseInt(rollScores.eq(rollIndex).prev().text()) + score === 10
+  }
+
+  //
+
   isSecondRoll = function(){
     return rollScores.eq(rollIndex).attr('class').includes('second-roll')
+  }
+
+  isThirdRoll = function(){
+    return rollScores.eq(rollIndex).attr('class').includes('third-roll')
   }
 
   isSpare = function(score){
     return parseInt(rollScores.eq(rollIndex).siblings(0).text()) + score === 10
   }
-///
 
   updateAllFrames = function(){
     game._frames.forEach(function(frame, index){
