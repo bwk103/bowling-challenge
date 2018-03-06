@@ -8,11 +8,13 @@ $(document).ready(function(){
 
   $('#start-button').on('click', function(){
     game.start();
+    $(this).toggleClass('hide')
   })
 
   $('.roll-btn').on('click', function(){
     var score = parseInt(($(this).attr('value')));
     roll(score);
+    disableButtons(score);
     updateRollScores(score);
     checkFrame()
     checkGame()
@@ -46,6 +48,7 @@ $(document).ready(function(){
     if ($(rollScores).eq(rollIndex).attr('class').includes('first-roll')){
       rollScores.eq(rollIndex).text('X');
       rollScores.eq(rollIndex + 1).text('-');
+      $('button.roll-btn').removeClass('hide')
       rollIndex += 2;
     } else {
       rollScores.eq(rollIndex).text('/');
@@ -63,8 +66,10 @@ $(document).ready(function(){
         rollIndex += 1;
       }
       rollScores.eq(rollIndex).text('X')
+      $('button.roll-btn').removeClass('hide')
     } else {
       rollScores.eq(rollIndex).text('X')
+      $('button.roll-btn').removeClass('hide')
       rollIndex += 1;
     }
   }
@@ -74,6 +79,10 @@ $(document).ready(function(){
   }
 
   //
+
+  isfirstRoll = function(){
+    return rollScores.eq(rollIndex).attr('class').includes('first-roll')
+  }
 
   isSecondRoll = function(){
     return rollScores.eq(rollIndex).attr('class').includes('second-roll')
@@ -104,6 +113,23 @@ $(document).ready(function(){
         }
       }
     })
+  }
+
+  disableButtons = function(score){
+    var btns;
+    if (isfirstRoll()){
+      btns = $('button.roll-btn')
+      btns.removeClass('hide')
+      btns = btns.filter(function(btn){
+        return btn + score > 10
+      })
+      console.log(btns)
+      btns.addClass('hide')
+    }
+    if(isSecondRoll()){
+      btns = $('button.hide')
+      btns.removeClass('hide')
+    }
   }
 
   checkFrame = function(){

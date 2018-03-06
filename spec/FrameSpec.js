@@ -65,16 +65,16 @@ describe('Frame', function(){
       expect(strikeRoll.score).toHaveBeenCalled();
     })
 
-    describe('when a strike is scored', function(){
-      it('finishes the current frame', function(){
-        spyOn(frame, 'endFrame')
-        frame.addRoll(strikeRoll)
-        frame.hasStrike()
-        expect(frame.endFrame).toHaveBeenCalled()
-      });
-
-      //WILL CALL TO BONUS CLASS IN DUE COURSE
-    });
+    // describe('when a strike is scored', function(){
+    //   // it('finishes the current frame', function(){
+    //   //   spyOn(frame, 'endFrame')
+    //   //   frame.addRoll(strikeRoll)
+    //   //   frame.hasStrike()
+    //   //   expect(frame.endFrame).toHaveBeenCalled()
+    //   // });
+    //
+    //   //WILL CALL TO BONUS CLASS IN DUE COURSE
+    // });
 
     describe('when a strike was not scored', function(){
       it('continues the current frame', function(){

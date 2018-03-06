@@ -3,18 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Bowling Challenge</title>
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="public/css/normalize.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   </head>
   <body>
     <div class="wrapper">
       <header>
-        Bowling Challenge
+        Bowling Challenge <span>by Ben Kielty</span>
       </header>
       <div id="background"></div>
-      <img src="title-image.png">
-      <h3>Let's Bowl</h3>
-      <button id="start-button">Start Game</button>
+      <div id="buttons">
+        <div id="button-list">
+          <button id="start-button" class="pure-button">Start Game</button>
+          <button class="roll-btn pure-button" type="button" value="0">0</button>
+          <button class="roll-btn pure-button" type="button" value="1">1</button>
+          <button class="roll-btn pure-button" type="button" value="2">2</button>
+          <button class="roll-btn pure-button" type="button" value="3">3</button>
+          <button class="roll-btn pure-button" type="button" value="4">4</button>
+          <button class="roll-btn pure-button" type="button" value="5">5</button>
+          <button class="roll-btn pure-button" type="button" value="6">6</button>
+          <button class="roll-btn pure-button" type="button" value="7">7</button>
+          <button class="roll-btn pure-button" type="button" value="8">8</button>
+          <button class="roll-btn pure-button" type="button" value="9">9</button>
+          <button class="roll-btn pure-button" type="button" value="10">10</button>
+        </div>
+      </div>
       <div class="scoreboard">
         <div class="score_titles">
           <p>Player</p>
@@ -31,7 +46,7 @@
           <p>Total</p>
         </div>
         <p class="player-id">Ben</p>
-        <div class="frame">
+        <div class="first frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>
           <div id="frameScore0" class="frame-score"></div>
@@ -85,19 +100,6 @@
         <div id="total" class="frame">
           <div class="frame-score game-score"></div>
         </div>
-      </div>
-      <div id="button-list">
-        <input class="roll-btn" type="button" value="0">
-        <input class="roll-btn" type="button" value="1">
-        <input class="roll-btn" type="button" value="2">
-        <input class="roll-btn" type="button" value="3">
-        <input class="roll-btn" type="button" value="4">
-        <input class="roll-btn" type="button" value="5">
-        <input class="roll-btn" type="button" value="6">
-        <input class="roll-btn" type="button" value="7">
-        <input class="roll-btn" type="button" value="8">
-        <input class="roll-btn" type="button" value="9">
-        <input class="roll-btn" type="button" value="10">
       </div>
     </div>
     <script
