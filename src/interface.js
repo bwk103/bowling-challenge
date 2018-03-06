@@ -1,10 +1,10 @@
-var $ = require("jquery");
-
 $(document).ready(function(){
-
+  
   var game = new Game()
   var rollScores = $('.roll')
+  var rollIndex = 0;
   var frameScores = $('.frame-score')
+  var frameIndex = 0;
 
   $('#start-button').on('click', function(){
     game.start();
@@ -13,50 +13,74 @@ $(document).ready(function(){
   $('.roll-btn').on('click', function(){
     var score = parseInt(($(this).attr('value')));
     roll(score);
+    updateRollScores(score);
+    checkFrame()
+    checkGame()
   })
 
   roll = function(score){
     game.roll(score)
-    updateRollScores(score)
-    checkFrame()
   }
 
   updateRollScores = function(score){
+    var score = score;
     if (score === 10){
       tenScored()
     } else {
-      rollScores.first().text(score);
+    if (isSecondRoll() && isSpare(score)){
+      score = '/'
     }
-    rollScores.splice(0, 1);
+    rollScores.eq(rollIndex).text(score)
+    rollIndex += 1;
   }
-
-  updateFrameScores = function(){
-    frameScores.first().text(game.score());
-    frameScores.splice(0, 1);
-  }
+}
 
   tenScored = function(){
-    if ($(rollScores).first().attr('class').includes('first-roll')){
-      rollScores.eq(0).text('X');
-      rollScores.eq(1).text('-');
-      rollScores.splice(0, 1)
+    if ($(rollScores).eq(rollIndex).attr('class').includes('first-roll')){
+      rollScores.eq(rollIndex).text('X');
+      rollScores.eq(rollIndex + 1).text('-');
+      rollIndex += 2;
     } else {
-      rollScores.first().text('/');
+      rollScores.eq(rollIndex).text('/');
     }
+  }
+
+  isSecondRoll = function(){
+    return rollScores.eq(rollIndex).attr('class').includes('second-roll')
+  }
+
+  isSpare = function(score){
+    return parseInt(rollScores.eq(rollIndex).siblings(0).text()) + score === 10
+  }
+///
+
+  updateAllFrames = function(){
+    game._frames.forEach(function(frame, index){
+      if (index === 0 && frame.isComplete()){
+        $('#frameScore' + index).text(game._frames[0].frameScore())
+      } else {
+        if (frame.isComplete()) {
+          var prevScore = game._frames.slice(0, index)
+            .map(function(prevFrame){
+              return prevFrame.frameScore()
+            })
+            .reduce(function(total, nextScore){
+            return total + nextScore
+            })
+            $('#frameScore' + index).text(prevScore + frame.frameScore())
+        }
+      }
+    })
   }
 
   checkFrame = function(){
-    var currentFrame = game._frames[game._currentFrameIndex()];
-    if(game._frames.length > 1){
-      var previousFrame = game._frames[(game._currentFrameIndex() -1)];
-      if(previousFrame.isComplete && currentFrame._rolls.length === 0){
-        updateFrameScores()
-      }
-      if (game.currentFrame() === 10 && currentFrame.isComplete()){
-        updateFrameScores()
-        updateFrameScores()
-      }
-    }
+    if (game._frames.length <= 1) return;
+    updateAllFrames()
   }
 
+  checkGame = function(){
+    if (game.gameComplete){
+      $('.game-score').text(game.score());
+    }
+  }
 })

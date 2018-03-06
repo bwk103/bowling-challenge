@@ -18,7 +18,7 @@ Frame.prototype.addRoll = function(roll){
 }
 
 Frame.prototype.hasStrike = function(){
-  if(this._rolls[0].score() === 10) this.endFrame();
+  return this._rolls[0].score() === 10
 }
 
 Frame.prototype.isBonusDue = function(){

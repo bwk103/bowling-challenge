@@ -74,7 +74,7 @@ Game.prototype._secondRoll = function(frame, value, roll){
 }
 
 Game.prototype._isGameOver = function(){
-  var frame = this._frames[9] || { isComplete: ()=> false }
+  var frame = this._frames[9] || { isComplete: () => false }
   return frame.isComplete() === true
 }
 
