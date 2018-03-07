@@ -12,7 +12,7 @@ Game.prototype.score = function(){
 }
 
 Game.prototype.roll = function(value, roll=new Roll){
-  if(this._isGameOver()) throw new Error('The game is over')
+  this._checkGameOver()
   if(this.lastFrameBonus()) return this._addBonusScores(value)
   var thisFrame = this.getCurrentFrame()
   if(!this._isFirstFrame()) this._addBonusScores(value);
@@ -57,10 +57,9 @@ Game.prototype._firstRoll = function(frame, value, roll){
 
 Game.prototype._strikeScored = function(frame){
   frame.endFrame();
-  //if this.isLastFrame() => lastFrameStrike()
-  if(this._isGameOver()) return this.gameOver(); //This line will be moved to the frame10Bonus function
+  if(this._isGameOver()) return this.gameOver();
   else if(this.isLastFrame()){
-    //something else
+    null
   }
   else this.nextFrame();
 }
@@ -73,8 +72,12 @@ Game.prototype._secondRoll = function(frame, value, roll){
   if(frame.isComplete()) this.addScore(frame);
   if(this._isGameOver()) return this.gameOver();
   else if (this.isLastFrame() && frame.isBonusDue()){
-    //something which is not creating a new frame
+    return null
   } else this.nextFrame();
+}
+
+Game.prototype._checkGameOver = function(){
+  if(this.gameComplete) throw new Error('The game is over')
 }
 
 Game.prototype._isGameOver = function(){
@@ -106,7 +109,7 @@ Game.prototype._addBonusScores = function(value){
 }
 
 Game.prototype.lastFrameBonus = function(){
-  return this._frames.length === 10 && this._frames[9].isBonusDue()
+  return this.allFrames().length === 10 && this.getCurrentFrame().isBonusDue()
 }
 
 Game.prototype.isLastFrame = function(){
