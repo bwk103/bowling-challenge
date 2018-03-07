@@ -397,4 +397,11 @@ describe('Game', function(){
       })
     })
   })
+
+  describe('#getCurrentFrame', function() {
+    it('returns the current frame', function(){
+      game.start(frame)
+      expect(game.getCurrentFrame()).toEqual(frame)
+    })
+  })
 })

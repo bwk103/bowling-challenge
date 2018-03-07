@@ -14,7 +14,7 @@ Game.prototype.score = function(){
 Game.prototype.roll = function(value, roll=new Roll){
   if(this._isGameOver()) throw new Error('The game is over')
   if(this.lastFrameBonus()) return this._addBonusScores(value)
-  var thisFrame = this._frames[this._currentFrameIndex()]
+  var thisFrame = this.getCurrentFrame()
   if(!this._isFirstFrame()) this._addBonusScores(value);
   if (thisFrame.isFirstRoll()) this._firstRoll(thisFrame, value, roll);
   else this._secondRoll(thisFrame, value, roll);
@@ -22,6 +22,10 @@ Game.prototype.roll = function(value, roll=new Roll){
 
 Game.prototype.currentFrame = function(){
   return this._frames.length
+}
+
+Game.prototype.getCurrentFrame = function(){
+  return this._frames[this._frames.length-1]
 }
 
 Game.prototype.addScore = function(frame){
@@ -34,10 +38,6 @@ Game.prototype.nextFrame = function(frame=new Frame){
 
 Game.prototype._addToFrame = function(frame, roll){
   frame.addRoll(roll)
-}
-
-Game.prototype._currentFrameIndex = function(){
-  return this._frames.length - 1
 }
 
 Game.prototype.gameOver = function(){

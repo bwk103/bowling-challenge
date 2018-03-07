@@ -27,7 +27,7 @@ $(document).ready(function(){
   updateRollScores = function(score){
     var score = score;
     if (score === 10){
-      if (game.currentFrame() === 10 && game._frames[9]._rolls.length > 0 ) {
+      if (game.currentFrame() === 10 && game.getCurrentFrame()._rolls.length > 0 ) {
         lastFrameScores()
       } else {
         tenScored()
@@ -79,6 +79,7 @@ $(document).ready(function(){
   }
 
   //
+
 
   isfirstRoll = function(){
     return rollScores.eq(rollIndex).attr('class').includes('first-roll')
