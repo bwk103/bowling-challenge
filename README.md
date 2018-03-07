@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bwk103/bowling-challenge.svg?branch=master)](https://travis-ci.org/bwk103/bowling-challenge)
+
 # Bowling Scorecard
 
 ## Challenge
@@ -42,6 +44,10 @@ To get started, first enter your name in the text field, then click on 'Play gam
 
 The scoring rules for ten-pin-bowling are far more complex than I could have imagined before starting this project so rather than try to explain them in detail here, I shall defer to [Wikipedia](https://en.wikipedia.org/wiki/Ten-pin_bowling#Traditional_scoring).
 
+![Imgur](https://i.imgur.com/e36ARPb.png)
+
+
+![Imgur](https://i.imgur.com/dVr3DJC.png)
 
 ## Running the tests
 In order to run my javascript tests, execute the following command and the tests will appear in your browser.
