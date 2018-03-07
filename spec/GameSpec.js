@@ -404,4 +404,11 @@ describe('Game', function(){
       expect(game.getCurrentFrame()).toEqual(frame)
     })
   })
+
+  describe('#allFrames', function(){
+    it('returns an array containing all frames', function(){
+      game.start(frame)
+      expect(game.allFrames()).toEqual([frame])
+    })
+  })
 })

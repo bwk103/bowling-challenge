@@ -28,6 +28,10 @@ Game.prototype.getCurrentFrame = function(){
   return this._frames[this._frames.length-1]
 }
 
+Game.prototype.allFrames = function(){
+  return this._frames;
+}
+
 Game.prototype.addScore = function(frame){
   this._score += frame.frameScore();
 }
@@ -89,7 +93,7 @@ Game.prototype._isFirstFrame = function(){
 
 Game.prototype._addBonusScores = function(value){
   var game = this;
-  var bonusFrames = this._frames.filter(function(frame){
+  var bonusFrames = this.allFrames().filter(function(frame){
     return frame.isBonusDue() && frame.isComplete() === false
   });
   if (bonusFrames.length > 0){

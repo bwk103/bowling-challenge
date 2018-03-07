@@ -86,12 +86,12 @@ $(document).ready(function(){
   }
 
   updateAllFrames = function(){
-    game._frames.forEach(function(frame, index){
+    game.allFrames().forEach(function(frame, index){
       if (index === 0 && frame.isComplete()){
-        $('#frameScore' + index).text(game._frames[0].frameScore())
+        $('#frameScore' + index).text(game.allFrames()[0].frameScore())
       } else {
         if (frame.isComplete()) {
-          var prevScore = game._frames.slice(0, index)
+          var prevScore = game.allFrames().slice(0, index)
             .map(function(prevFrame){
               return prevFrame.frameScore()
             })
@@ -122,7 +122,7 @@ $(document).ready(function(){
   }
 
   checkFrame = function(){
-    if (game._frames.length <= 1) return;
+    if (game.allFrames().length <= 1) return;
     updateAllFrames()
   }
 
