@@ -1,7 +1,8 @@
-var Game = function(){
+var Game = function(player){
   this._frames = [];
   this._score = 0;
   this.gameComplete = false;
+  this.player = player
 }
 Game.prototype.start = function(frame=new Frame){
   this._frames.push(frame)

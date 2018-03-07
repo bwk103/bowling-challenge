@@ -13,10 +13,15 @@
       <header>
         Bowling Challenge <span>by Ben Kielty</span>
       </header>
+      <div id="player-details">
+        <form class="pure-form">
+          <input class="pure-input-rounded" type="text" id="player-name" placeholder="your name here....">
+          <button id="start-button" class="pure-button">Start Game</button>
+        </form>
+      </div>
       <div id="background"></div>
       <div id="buttons">
         <div id="button-list">
-          <button id="start-button" class="pure-button">Start Game</button>
           <button class="roll-btn pure-button" type="button" value="0">0</button>
           <button class="roll-btn pure-button" type="button" value="1">1</button>
           <button class="roll-btn pure-button" type="button" value="2">2</button>
@@ -45,7 +50,7 @@
           <p>10</p>
           <p>Total</p>
         </div>
-        <p class="player-id">Ben</p>
+        <p class="player-id"></p>
         <div class="first frame">
           <div class="first-roll roll"></div>
           <div class="second-roll roll"></div>

@@ -1,12 +1,16 @@
 $(document).ready(function(){
 
-  var game = new Game()
+  var game;
   var rollScores = $('.roll')
   var rollIndex = 0;
   var frameScores = $('.frame-score')
   var frameIndex = 0;
 
-  $('#start-button').on('click', function(){
+  $('#start-button').on('click', function(e){
+    e.preventDefault()
+    var player = new Player($('#player-name').val())
+    game = new Game(player)
+    $('.player-id').text(game.player.name())
     game.start();
     $(this).toggleClass('hide')
   })
