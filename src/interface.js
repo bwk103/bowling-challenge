@@ -33,10 +33,10 @@ $(document).ready(function(){
         tenScored()
       }
     } else {
-    if (isSecondRoll() && isSpare(score)){
+    if (isXRoll('second') && isSpare(score)){
       score = '/'
     }
-    if (isThirdRoll() && lastFrameSpare(score)){
+    if (isXRoll('third') && lastFrameSpare(score)){
       score = '/'
     }
     rollScores.eq(rollIndex).text(score)
@@ -55,12 +55,11 @@ $(document).ready(function(){
     }
   }
 
-  ///
   lastFrameScores = function(){
-    if (isSecondRoll() && isSpare(10) ){
+    if (isXRoll('second') && isSpare(10) ){
       rollScores.eq(rollIndex).text('/')
       rollIndex += 1;
-    } else if (isThirdRoll()){
+    } else if (isXRoll('third')){
       if (lastFrameSpare(10)){
         rollScores.eq(rollIndex).text('/')
         rollIndex += 1;
@@ -78,19 +77,8 @@ $(document).ready(function(){
     return parseInt(rollScores.eq(rollIndex).prev().text()) + score === 10
   }
 
-  //
-
-
-  isfirstRoll = function(){
-    return rollScores.eq(rollIndex).attr('class').includes('first-roll')
-  }
-
-  isSecondRoll = function(){
-    return rollScores.eq(rollIndex).attr('class').includes('second-roll')
-  }
-
-  isThirdRoll = function(){
-    return rollScores.eq(rollIndex).attr('class').includes('third-roll')
+  isXRoll = function(string){
+    return rollScores.eq(rollIndex).attr('class').includes(string+'-roll')
   }
 
   isSpare = function(score){
@@ -118,7 +106,7 @@ $(document).ready(function(){
 
   disableButtons = function(score){
     var btns;
-    if (isfirstRoll()){
+    if (isXRoll('first')){
       btns = $('button.roll-btn')
       btns.removeClass('hide')
       btns = btns.filter(function(btn){
@@ -127,7 +115,7 @@ $(document).ready(function(){
       console.log(btns)
       btns.addClass('hide')
     }
-    if(isSecondRoll()){
+    if(isXRoll('second')){
       btns = $('button.hide')
       btns.removeClass('hide')
     }
