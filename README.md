@@ -1,77 +1,61 @@
+# Bowling Scorecard
 
-Bowling Challenge
-=================
+## Challenge
+
+Create an application using Javascript which allows the user to score a bowling game.
+
+Try my application [here](https://bk-bowling.herokuapp.com/)
+
+## Getting Started
+The easiest way to use the scorer is to visit the heroku link (above), but if you instead wish to run it on a local server, follow these steps:
+
+### Prerequisites
+Whilst the project is predominantly written in JavaScript, it uses Sinatra to run on a localhost, therefore you're going to need the following:
+
+#### Ruby
+If you're on Linux or Mac you can probably ignore this step, otherwise download and install Ruby from [here](https://www.ruby-lang.org/en/).
+
+#### Bundler
+The simplest way to install Sinatra is via bundler. Therefore if you've never used it in the past, run the following at the command line:
+
+`gem install bundler`
+
+### Installing Bowling Scorecard
+Navigate to an appropriate location and run the following command:
+
+`git clone https://github.com/bwk103/bowling-challenge.git`
+
+Once all the files have been downloaded, navigate to the new project directory and run the following:
+
+`bundle install`
+
+After the dependencies have been installed, you're good to go. Launch the application using the following command:
+
+`rackup config.ru`
+
+And in your browser, navigate to the appropriate port.
+
+## Playing the Game
+It's bowling, but without most of the fun!  Unless you happen to be visiting a bowling alley without any form of scorer, you'll have to use your imagination to picture the toppling of the pins.  
+
+To get started, first enter your name in the text field, then click on 'Play game'.  Then, simulate your first shot, then your second etc, etc.  The game will automatically jump to the next frame for you.
+
+The scoring rules for ten-pin-bowling are far more complex than I could have imagined before starting this project so rather than try to explain them in detail here, I shall defer to [Wikipedia](https://en.wikipedia.org/wiki/Ten-pin_bowling#Traditional_scoring).
 
 
-* Challenge time: rest of the day and weekend.
-* Feel free to use google, your notes, books, etc. but work on your own
-* If you refer to the solution of another coach or student, please put a link to that in your README
-* If you have a partial solution, **still check in a partial solution**
-* You must submit a pull request to this repo with your code by 9am Monday week
+## Running the tests
+In order to run my javascript tests, execute the following command and the tests will appear in your browser.
 
-## The Task
+`open SpecRunner.html`
 
-Count and sum the scores of a bowling game for one player (in JavaScript).
+## Built With
+- Jamine Standalone - JavaScript testing framework
+- Sinata
+- Pure CSS - CSS modules for buttons and inputs
+- Google Fonts - for, erm, fonts
+- Heroku - hosting application
+- jQuery - for east selecting and editing elements
 
-A bowling game consists of 10 frames in which the player tries to knock down the 10 pins. In every frame the player can roll one or two times. The actual number depends on strikes and spares. The score of a frame is the number of knocked down pins plus bonuses for strikes and spares. After every frame the 10 pins are reset.
-
-As usual please start by
-
-* Forking this repo
-
-* Finally submit a pull request before Monday week at 9am with your solution or partial solution.  However much or little amount of code you wrote please please please submit a pull request before Monday week at 9am.  And since next week is lab week you have a full extra week to work on this.
-
-___STRONG HINT, IGNORE AT YOUR PERIL:___ Bowling is a deceptively complex game. Careful thought and thorough diagramming — both before and throughout — will save you literal hours of your life.
-
-Also, don't generate random rolls. Trust us on this one.
-
-### Optional Extras
-
-In any order you like:
-
-* Create a nice interactive animated interface with jQuery.
-* Set up [Travis CI](https://travis-ci.org) to run your tests.
-* Add [ESLint](http://eslint.org/) to your codebase and make your code conform.
-
-You might even want to start with ESLint early on in your work — to help you
-learn Javascript conventions as you go along.
-
-## Bowling — how does it work?
-
-### Strikes
-
-The player has a strike if he knocks down all 10 pins with the first roll in a frame. The frame ends immediately (since there are no pins left for a second roll). The bonus for that frame is the number of pins knocked down by the next two rolls. That would be the next frame, unless the player rolls another strike.
-
-### Spares
-
-The player has a spare if the knocks down all 10 pins with the two rolls of a frame. The bonus for that frame is the number of pins knocked down by the next roll (first roll of next frame).
-
-### 10th frame
-
-If the player rolls a strike or spare in the 10th frame they can roll the additional balls for the bonus. But they can never roll more than 3 balls in the 10th frame. The additional rolls only count for the bonus not for the regular frame count.
-
-    10, 10, 10 in the 10th frame gives 30 points (10 points for the regular first strike and 20 points for the bonus).
-    1, 9, 10 in the 10th frame gives 20 points (10 points for the regular spare and 10 points for the bonus).
-
-### Gutter Game
-
-A Gutter Game is when the player never hits a pin (20 zero scores).
-
-### Perfect Game
-
-A Perfect Game is when the player rolls 12 strikes (10 regular strikes and 2 strikes for the bonus in the 10th frame). The Perfect Game scores 300 points.
-
-In the image below you can find some score examples.
-
-More about ten pin bowling here: http://en.wikipedia.org/wiki/Ten-pin_bowling
-
-![Ten Pin Score Example](images/example_ten_pin_scoring.png)
-
-## Code Review
-
-In code review we'll be hoping to see:
-
-* All tests passing
-* The code is elegant: every class has a clear responsibility, methods are short etc.
-
-Reviewers will potentially be using this [code review rubric](docs/review.md).  Note that referring to this rubric in advance may make the challenge somewhat easier.  You should be the judge of how much challenge you want.
+## Acknowledgements
+- Makers Academy for their challenge.
+- Background Photo by Todd Diemer on Unsplash
